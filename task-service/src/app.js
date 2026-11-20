@@ -36,6 +36,10 @@ app.get("/db-health", async (req, res) => {
     }
 });
 
+const queueRoutes = require("./routes/queue.routes");
+
+app.use("/queue", queueRoutes);
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
