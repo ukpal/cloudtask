@@ -17,6 +17,25 @@ app.get("/health", (req, res) => {
     });
 });
 
+const db = require("./config/db");
+
+app.get("/db-health", async (req, res) => {
+    try {
+        const result = await db.query("SELECT NOW()");
+
+        res.json({
+            database: "connected",
+            time: result.rows[0].now
+        });
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            database: "disconnected"
+        });
+    }
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
